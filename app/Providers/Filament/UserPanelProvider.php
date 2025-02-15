@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -20,6 +21,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Wallo\FilamentCompanies\FilamentCompanies;
 use Wallo\FilamentCompanies\Pages\User\PersonalAccessTokens;
 use Wallo\FilamentCompanies\Pages\User\Profile;
 
@@ -42,7 +44,15 @@ class UserPanelProvider extends PanelProvider
                 MenuItem::make()
                     ->label('Company')
                     ->icon('heroicon-o-building-office')
-                    ->url(static fn () => url(Pages\Dashboard::getUrl(panel: 'company', tenant: Auth::user()->personalCompany()))),
+                    ->url(function (): string {
+                        $user = Auth::user();
+
+                        if ($company = $user?->primaryCompany()) {
+                            return Pages\Dashboard::getUrl(panel: 'company', tenant: $company);
+                        }
+
+                        return Filament::getPanel(FilamentCompanies::getCompanyPanel())->getTenantRegistrationUrl();
+                    }),
             ])
             ->navigationItems([
                 NavigationItem::make('Personal Access Tokens')

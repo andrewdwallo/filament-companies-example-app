@@ -18,6 +18,7 @@ use App\Actions\FilamentCompanies\UpdateConnectedAccount;
 use App\Actions\FilamentCompanies\UpdateUserPassword;
 use App\Actions\FilamentCompanies\UpdateUserProfileInformation;
 use App\Models\Company;
+use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -55,7 +56,15 @@ class FilamentCompaniesServiceProvider extends PanelProvider
             ->default()
             ->login(Login::class)
             ->passwordReset()
-            ->homeUrl(static fn (): string => url(Pages\Dashboard::getUrl(panel: 'company', tenant: Auth::user()?->personalCompany())))
+            ->homeUrl(function (): ?string {
+                $user = Auth::user();
+
+                if ($company = $user?->primaryCompany()) {
+                    return Pages\Dashboard::getUrl(panel: 'company', tenant: $company);
+                }
+
+                return Filament::getPanel(FilamentCompanies::getCompanyPanel())->getTenantRegistrationUrl();
+            })
             ->plugin(
                 FilamentCompanies::make()
                     ->userPanel('user')
@@ -69,6 +78,7 @@ class FilamentCompaniesServiceProvider extends PanelProvider
                     ->profilePhotos()
                     ->api()
                     ->companies(invitations: true)
+                    ->autoAcceptInvitations()
                     ->termsAndPrivacyPolicy()
                     ->notifications()
                     ->modals()
