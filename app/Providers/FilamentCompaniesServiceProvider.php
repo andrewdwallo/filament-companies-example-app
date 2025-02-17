@@ -56,11 +56,11 @@ class FilamentCompaniesServiceProvider extends PanelProvider
             ->default()
             ->login(Login::class)
             ->passwordReset()
-            ->homeUrl(function (): ?string {
+            ->homeUrl(static function (): ?string {
                 $user = Auth::user();
 
                 if ($company = $user?->primaryCompany()) {
-                    return Pages\Dashboard::getUrl(panel: 'company', tenant: $company);
+                    return Pages\Dashboard::getUrl(panel: FilamentCompanies::getCompanyPanel(), tenant: $company);
                 }
 
                 return Filament::getPanel(FilamentCompanies::getCompanyPanel())->getTenantRegistrationUrl();
@@ -104,7 +104,7 @@ class FilamentCompaniesServiceProvider extends PanelProvider
                 'profile' => MenuItem::make()
                     ->label('Profile')
                     ->icon('heroicon-o-user-circle')
-                    ->url(static fn () => route(Profile::getRouteName(panel: 'user'))),
+                    ->url(static fn () => Profile::getUrl(panel: FilamentCompanies::getUserPanel())),
             ])
             ->authGuard('web')
             ->discoverWidgets(in: app_path('Filament/Company/Widgets'), for: 'App\\Filament\\Company\\Widgets')

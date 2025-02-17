@@ -40,15 +40,15 @@ class UserPanelProvider extends PanelProvider
                 'profile' => MenuItem::make()
                     ->label('Profile')
                     ->icon('heroicon-o-user-circle')
-                    ->url(static fn () => url(Profile::getUrl())),
+                    ->url(static fn () => Profile::getUrl()),
                 MenuItem::make()
                     ->label('Company')
                     ->icon('heroicon-o-building-office')
-                    ->url(function (): string {
+                    ->url(static function (): ?string {
                         $user = Auth::user();
 
                         if ($company = $user?->primaryCompany()) {
-                            return Pages\Dashboard::getUrl(panel: 'company', tenant: $company);
+                            return Pages\Dashboard::getUrl(panel: FilamentCompanies::getCompanyPanel(), tenant: $company);
                         }
 
                         return Filament::getPanel(FilamentCompanies::getCompanyPanel())->getTenantRegistrationUrl();
@@ -58,7 +58,7 @@ class UserPanelProvider extends PanelProvider
                 NavigationItem::make('Personal Access Tokens')
                     ->label(static fn (): string => __('filament-companies::default.navigation.links.tokens'))
                     ->icon('heroicon-o-key')
-                    ->url(static fn () => url(PersonalAccessTokens::getUrl())),
+                    ->url(static fn () => PersonalAccessTokens::getUrl()),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

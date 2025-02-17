@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "andrewdwallo/filament-companies",
-            "version": "v4.1.0",
+            "version": "v4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/andrewdwallo/filament-companies.git",
-                "reference": "3f35f2ec207966d72ebdfb119251b5cd0601c79f"
+                "reference": "a467d249285a066cbb915e2bb944eb00830ef060"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andrewdwallo/filament-companies/zipball/3f35f2ec207966d72ebdfb119251b5cd0601c79f",
-                "reference": "3f35f2ec207966d72ebdfb119251b5cd0601c79f",
+                "url": "https://api.github.com/repos/andrewdwallo/filament-companies/zipball/a467d249285a066cbb915e2bb944eb00830ef060",
+                "reference": "a467d249285a066cbb915e2bb944eb00830ef060",
                 "shasum": ""
             },
             "require": {
@@ -81,9 +81,9 @@
             ],
             "support": {
                 "issues": "https://github.com/andrewdwallo/filament-companies/issues",
-                "source": "https://github.com/andrewdwallo/filament-companies/tree/v4.1.0"
+                "source": "https://github.com/andrewdwallo/filament-companies/tree/v4.1.1"
             },
-            "time": "2025-02-15T03:01:39+00:00"
+            "time": "2025-02-16T19:05:34+00:00"
         },
         {
             "name": "anourvalar/eloquent-serialize",
