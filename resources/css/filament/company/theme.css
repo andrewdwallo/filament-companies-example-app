@@ -2,6 +2,5 @@
 
 @source '../../../../app/Filament';
 @source '../../../../resources/views/filament';
-@source '../../../../app/Filament/Company';
-@source '../../../../resources/views/filament/company';
 @source '../../../../vendor/andrewdwallo/filament-companies/resources/views';
+@source '../../../../vendor/andrewdwallo/filament-companies/src/Pages';

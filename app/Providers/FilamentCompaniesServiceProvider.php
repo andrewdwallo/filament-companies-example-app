@@ -93,7 +93,7 @@ class FilamentCompaniesServiceProvider extends PanelProvider
             )
             ->registration(Register::class)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
             ])
             ->viteTheme('resources/css/filament/company/theme.css')
             ->tenant(Company::class)
